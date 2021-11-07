@@ -17,6 +17,8 @@ import (
 	"go.uber.org/zap"
 )
 
+// GetLocalIPAddress retrieves the local IP (port not included) for the current
+// system as this is used in logs for quick access
 func GetLocalIPAddress() string {
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
@@ -27,6 +29,7 @@ func GetLocalIPAddress() string {
 	return addrWithNoPort[0]
 }
 
+// LoadLoggingConfig loads required config from .env that are default logging fields
 func LoadLoggingConfig() (common.LoggingFields, error) {
 	logFieldsConfig := common.LoggingFields{
 		NodeName: os.Getenv("NODE_NAME"),
@@ -42,6 +45,8 @@ func LoadLoggingConfig() (common.LoggingFields, error) {
 	return logFieldsConfig, nil
 }
 
+// InitLogger Initialises the zap logger and returns a pointer to an instance of it,
+// this also involves creating the logfile specified by LOG_PATH
 func InitLogger(logFieldsConfig common.LoggingFields) *zap.Logger {
 	os.OpenFile(logFieldsConfig.LogPaths[1], os.O_RDONLY|os.O_CREATE, 0666)
 	c := zap.NewProductionConfig()
@@ -60,10 +65,13 @@ func InitLogger(logFieldsConfig common.LoggingFields) *zap.Logger {
 	return log
 }
 
+// GetCurrentTimeInMs returns the current timestamp in milliseconds
 func GetCurrentTimeInMs() int64 {
 	return time.Now().UnixNano() / int64(time.Millisecond)
 }
 
+// GetRequestStartTimeInTimeFormat returns the int64 timestamp (in milliseconds) of a string
+// version of a timestamp
 func GetRequestStartTimeInTimeFormat(requestStartTimeString string) int64 {
 	requestStartTime, err := strconv.ParseInt(requestStartTimeString, 10, 64)
 	if err != nil {
@@ -72,6 +80,8 @@ func GetRequestStartTimeInTimeFormat(requestStartTimeString string) int64 {
 	return requestStartTime
 }
 
+// IsValidFormatGraphID determines whether not a string is a valid format
+// graphID that the system will serve
 func IsValidFormatGraphID(inputGraphID string) (bool, error) {
 	isNotValid, err := regexp.MatchString("[\\W]", inputGraphID)
 	if err != nil || isNotValid {
@@ -80,6 +90,8 @@ func IsValidFormatGraphID(inputGraphID string) (bool, error) {
 	return true, nil
 }
 
+// SendBasicInvalidResponse sends an invalid response back to the user with specified
+// status code and error message. This is used for invalid user input
 func SendBasicInvalidResponse(w http.ResponseWriter, req *http.Request, msg string, vars map[string]string, statusCode int) {
 	w.WriteHeader(statusCode)
 	response := struct {
@@ -90,6 +102,8 @@ func SendBasicInvalidResponse(w http.ResponseWriter, req *http.Request, msg stri
 	json.NewEncoder(w).Encode(response)
 }
 
+// SendBasicInvalidResponse sends an error response back to the user with specified
+// status code and error message. This is used for an error in the system
 func SendBasicErrorResponse(w http.ResponseWriter, req *http.Request, err error, vars map[string]string, statusCode int) {
 	w.WriteHeader(http.StatusInternalServerError)
 	response := struct {
