@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -87,4 +88,31 @@ func SendBasicInvalidResponse(w http.ResponseWriter, req *http.Request, msg stri
 		msg,
 	}
 	json.NewEncoder(w).Encode(response)
+}
+
+func SendBasicErrorResponse(w http.ResponseWriter, req *http.Request, err error, vars map[string]string, statusCode int) {
+	w.WriteHeader(http.StatusInternalServerError)
+	response := struct {
+		Error string `json:"error"`
+	}{
+		fmt.Sprintf("Give the code monkeys this ID: '%s'", vars["requestID"]),
+	}
+	json.NewEncoder(w).Encode(response)
+}
+
+// GetAndRead executes a HTTP GET request and returns the body
+// of the response in []byte format
+func GetAndRead(URL string) ([]byte, error) {
+	res, err := http.Get(URL)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	defer res.Body.Close()
+	if err != nil {
+		return []byte{}, err
+	}
+
+	return body, nil
 }
