@@ -2,4 +2,4 @@
 
 `go get github.com/neosteamfriendgraphing/common`
 
-Shared library of common DTOs for Neo
+Shared library of common DTOs for Neo.
