@@ -1,4 +1,4 @@
-# common
+# Common
 
 `go get github.com/neosteamfriendgraphing/common`
 
