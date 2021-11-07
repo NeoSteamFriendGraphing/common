@@ -1,9 +1,11 @@
 package util
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"regexp"
 	"strconv"
@@ -75,4 +77,14 @@ func IsValidFormatGraphID(inputGraphID string) (bool, error) {
 		return false, err
 	}
 	return true, nil
+}
+
+func SendBasicInvalidResponse(w http.ResponseWriter, req *http.Request, msg string, vars map[string]string, statusCode int) {
+	w.WriteHeader(statusCode)
+	response := struct {
+		Error string `json:"error"`
+	}{
+		msg,
+	}
+	json.NewEncoder(w).Encode(response)
 }
