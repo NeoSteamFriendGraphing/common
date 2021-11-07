@@ -115,7 +115,7 @@ func SendBasicErrorResponse(w http.ResponseWriter, req *http.Request, err error,
 }
 
 // GetAndRead executes a HTTP GET request and returns the body
-// of the response in []byte format
+// of the response in []byte format or an error if it's not nil
 func GetAndRead(URL string) ([]byte, error) {
 	res, err := http.Get(URL)
 	if err != nil {

@@ -6,7 +6,7 @@ type SteamAPIResponse struct {
 	Response Response `json:"response"`
 }
 
-// Response is filler
+// Response is filler that the steam web API includes
 type Response struct {
 	Players []Player `json:"players"`
 }
@@ -37,12 +37,13 @@ type UserDetails struct {
 	Friends Friendslist `json:"friendsList"`
 }
 
-// FriensdList holds all friends for a given user
+// FriendsList holds all friends for a given user
 type Friendslist struct {
 	Friends []Friend `json:"friends"`
 }
 
-// Friend holds basic details of a friend for a given user
+// Friend is profile information returned for each friend by
+// the steam web API for /getFriendsList calls
 type Friend struct {
 	Username     string `json:"username"`
 	Steamid      string `json:"steamid"`
@@ -50,10 +51,20 @@ type Friend struct {
 	FriendSince  int    `json:"friend_since"`
 }
 
+// GamesOwnedSteamResponse is the response from the steam web API
+// for /getOwnedGames calls
 type GamesOwnedSteamResponse struct {
 	Response GamesOwnedResponse `json:"response"`
 }
 
+// GamesOwnedResponse is filler returned by the steam web API
+type GamesOwnedResponse struct {
+	GameCount int    `json:"game_count"`
+	Games     []Game `json:"games"`
+}
+
+// Game is returned by the steam web API for each game
+// from calls to /getOwnedGames
 type Game struct {
 	Appid                    int    `json:"appid"`
 	Name                     string `json:"name"`
@@ -65,9 +76,4 @@ type Game struct {
 	PlaytimeLinuxForever     int    `json:"playtime_linux_forever"`
 	HasCommunityVisibleStats bool   `json:"has_community_visible_stats,omitempty"`
 	Playtime2Weeks           int    `json:"playtime_2weeks,omitempty"`
-}
-
-type GamesOwnedResponse struct {
-	GameCount int    `json:"game_count"`
-	Games     []Game `json:"games"`
 }
