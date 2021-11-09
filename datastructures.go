@@ -3,20 +3,20 @@ package common
 // UserDocument is the schema for information stored for a given user
 type UserDocument struct {
 	SteamID            string         `json:"steamid"`
-	AccDetails         Player         `json:"accDetails"`
-	FriendIDs          []string       `json:"friends"`
-	AmountOfGamesOwned int            `json:"amountOfGamesOwned"`
-	GamesOwned         []GameInfo     `json:"gamesOwned"`
-	CrawlingStatus     CrawlingStatus `json:"crawlingStatus"`
+	AccDetails         Player         `json:"accdetails"`
+	FriendIDs          []string       `json:"friendids"`
+	AmountOfGamesOwned int            `json:"amountofgamesowned"`
+	GamesOwned         []GameInfo     `json:"gamesowned"`
+	CrawlingStatus     CrawlingStatus `json:"crawlingstatus"`
 }
 
 // GamInfo is the schema for information stored for each steam game
 type GameInfo struct {
 	Name            string `json:"name"`
-	PlaytimeForever int    `json:"playtimeForever"`
-	Playtime2Weeks  int    `json:"playtime2Weeks"`
-	ImgIconURL      string `json:"imgIconUrl"`
-	ImgLogoURL      string `json:"imgLogoUrl"`
+	PlaytimeForever int    `json:"playtimeforever"`
+	Playtime2Weeks  int    `json:"playtime2weeks"`
+	ImgIconURL      string `json:"imgiconurl"`
+	ImgLogoURL      string `json:"imglogourl"`
 }
 
 // CrawlingStatus stores the total number of friends to crawl
@@ -25,6 +25,6 @@ type GameInfo struct {
 // user has been crawled completely and processing of their
 // data should start
 type CrawlingStatus struct {
-	TotalUsersToCrawl int `json:"totalUsersToCrawl"`
-	UsersCrawled      int `json:"usersCrawled"`
+	TotalUsersToCrawl int `json:"totaluserstocrawl"`
+	UsersCrawled      int `json:"userscrawled"`
 }
