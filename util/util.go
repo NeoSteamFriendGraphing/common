@@ -130,3 +130,41 @@ func GetAndRead(URL string) ([]byte, error) {
 
 	return body, nil
 }
+
+func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
+	resultString := ""
+	// Datastore specific
+	if os.Getenv("API_PORT") == "" {
+		resultString += "API_PORT\n"
+	}
+	if os.Getenv("LOG_PATH") == "" {
+		resultString += "LOG_PATH\n"
+	}
+	if os.Getenv("NODE_NAME") == "" {
+		resultString += "NODE_NAME\n"
+	}
+	if os.Getenv("SYSTEM_STATS_BUCKET") == "" {
+		resultString += "SYSTEM_STATS_BUCKET\n"
+	}
+	if os.Getenv("SYSTEM_STATS_BUCKET_TOKEN") == "" {
+		resultString += "SYSTEM_STATS_BUCKET_TOKEN\n"
+	}
+	if os.Getenv("ORG") == "" {
+		resultString += "ORG\n"
+	}
+	if os.Getenv("INFLUXDB_URL") == "" {
+		resultString += "INFLUXDB_URL\n"
+	}
+
+	// Service specific env vars
+	for _, envVar := range serviceSpecificEnvVars {
+		if os.Getenv(envVar) == "" {
+			resultString += fmt.Sprintf("%s\n", envVar)
+		}
+	}
+
+	if resultString != "" {
+		return fmt.Errorf("One or more env vars were not set: %s", resultString)
+	}
+	return nil
+}

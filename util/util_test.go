@@ -55,3 +55,56 @@ func TestIsValidFormatGraphIDWithPathTraversalInput(t *testing.T) {
 	assert.False(t, isValid)
 	assert.Nil(t, err)
 }
+
+func TestEnsureAllEnvvarsAreSet(t *testing.T) {
+	os.Setenv("API_PORT", "techno")
+	os.Setenv("LOG_PATH", "techno")
+	os.Setenv("NODE_NAME", "techno")
+	os.Setenv("SYSTEM_STATS_BUCKET", "techno")
+	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "techno")
+	os.Setenv("ORG", "techno")
+	os.Setenv("INFLUXDB_URL", "techno")
+
+	assert.NoError(t, EnsureAllEnvVarsAreSet())
+
+	os.Setenv("API_PORT", "")
+	os.Setenv("LOG_PATH", "")
+	os.Setenv("NODE_NAME", "")
+	os.Setenv("SYSTEM_STATS_BUCKET", "")
+	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "")
+	os.Setenv("ORG", "")
+	os.Setenv("INFLUXDB_URL", "")
+}
+
+func TestEnsureAllEnvvarsCatchesAnUnsetDefaultVariable(t *testing.T) {
+	os.Setenv("API_PORT", "techno")
+	os.Setenv("LOG_PATH", "techno")
+	os.Setenv("NODE_NAME", "techno")
+	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "techno")
+	os.Setenv("ORG", "techno")
+	os.Setenv("INFLUXDB_URL", "techno")
+
+	expectedErrorMsg := "One or more env vars were not set: SYSTEM_STATS_BUCKET\n"
+	assert.EqualError(t, EnsureAllEnvVarsAreSet(), expectedErrorMsg)
+
+	os.Setenv("API_PORT", "")
+	os.Setenv("LOG_PATH", "")
+	os.Setenv("NODE_NAME", "")
+	os.Setenv("SYSTEM_STATS_BUCKET", "")
+	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "")
+	os.Setenv("ORG", "")
+	os.Setenv("INFLUXDB_URL", "")
+}
+
+func TestEnsureAllEnvvarsCatchesAnUnsetServiceSpecificVariable(t *testing.T) {
+	os.Setenv("API_PORT", "techno")
+	os.Setenv("LOG_PATH", "techno")
+	os.Setenv("NODE_NAME", "techno")
+	os.Setenv("SYSTEM_STATS_BUCKET", "techno")
+	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "techno")
+	os.Setenv("ORG", "techno")
+	os.Setenv("INFLUXDB_URL", "techno")
+
+	expectedErrorMsg := "One or more env vars were not set: ANYCANS\n"
+	assert.EqualError(t, EnsureAllEnvVarsAreSet("ANYCANS"), expectedErrorMsg)
+}
