@@ -17,6 +17,16 @@ import (
 	"go.uber.org/zap"
 )
 
+// IsValidFormatSteamID determines if a string is a valid
+// format steam64ID (17 numerical digits)
+func IsValidFormatSteamID(steamID string) bool {
+	if len(steamID) != 17 {
+		return false
+	}
+	match, _ := regexp.MatchString("([0-9]){17}", steamID)
+	return match
+}
+
 // GetLocalIPAddress retrieves the local IP (port not included) for the current
 // system as this is used in logs for quick access
 func GetLocalIPAddress() string {

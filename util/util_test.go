@@ -14,6 +14,14 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
+func TestIsValidFormatSteamIDWithValidSteamID(t *testing.T) {
+	assert.True(t, IsValidFormatSteamID("76561197969081524"))
+}
+
+func TestIsValidFormatSteamIDWithInValidSteamID(t *testing.T) {
+	assert.False(t, IsValidFormatSteamID("76561197969081524123456"))
+}
+
 func TestGetLocalIPAddress(t *testing.T) {
 	IPAddress := GetLocalIPAddress()
 	assert.Greater(t, len(IPAddress), 0, "returned IP address must not be empty")

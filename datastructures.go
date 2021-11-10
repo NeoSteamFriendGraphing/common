@@ -28,3 +28,11 @@ type CrawlingStatus struct {
 	TotalUsersToCrawl   int    `json:"totaluserstocrawl"`
 	UsersCrawled        int    `json:"userscrawled"`
 }
+
+// LoggingFields holds the default fields attached to logs
+type LoggingFields struct {
+	NodeName string
+	NodeDC   string
+	LogPaths []string
+	NodeIPV4 string
+}
