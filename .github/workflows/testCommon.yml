@@ -1,0 +1,26 @@
+name: Test Common
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build common job
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup go runtime
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Build the module
+      run: go build -v ./...
+
+    - name: Run service tests
+      run: go test -v ./...
