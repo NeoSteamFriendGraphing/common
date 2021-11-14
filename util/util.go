@@ -112,7 +112,7 @@ func SendBasicInvalidResponse(w http.ResponseWriter, req *http.Request, msg stri
 	json.NewEncoder(w).Encode(response)
 }
 
-// SendBasicInvalidResponse sends an error response back to the user with specified
+// SendBasicErrorResponse sends an error response back to the user with specified
 // status code and error message. This is used for an error in the system
 func SendBasicErrorResponse(w http.ResponseWriter, req *http.Request, err error, vars map[string]string, statusCode int) {
 	w.WriteHeader(http.StatusInternalServerError)

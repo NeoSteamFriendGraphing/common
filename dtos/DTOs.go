@@ -13,3 +13,10 @@ type SaveUserDTO struct {
 	MaxLevel            int                 `json:"maxlevel"`
 	User                common.UserDocument `json:"user"`
 }
+
+// GetUserDTO is the returned data when user has been successfully
+// found in the database
+type GetUserDTO struct {
+	Status string              `json:"status"`
+	User   common.UserDocument `json:"user"`
+}
