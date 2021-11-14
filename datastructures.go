@@ -2,14 +2,27 @@ package common
 
 // UserDocument is the schema for information stored for a given user
 type UserDocument struct {
-	SteamID    string     `json:"steamid"`
-	AccDetails Player     `json:"accdetails"`
-	FriendIDs  []string   `json:"friendids"`
-	GamesOwned []GameInfo `json:"gamesowned"`
+	AccDetails AccDetailsDocument  `json:"accdetails"`
+	FriendIDs  []string            `json:"friendids"`
+	GamesOwned []GameOwnedDocument `json:"gamesowned"`
 }
 
-// GamInfo is the schema for information stored for each steam game
+type AccDetailsDocument struct {
+	SteamID        string `json:"steamid"`
+	Profileurl     string `json:"profileurl"`
+	Avatar         string `json:"avatar"`
+	Timecreated    int    `json:"timecreated"`
+	Loccountrycode string `json:"loccountrycode"`
+}
+
+type GameOwnedDocument struct {
+	AppID           int `json:"appid"`
+	PlaytimeForever int `json:"playtime_forever"`
+}
+
+// GameInfo is the schema for information stored for each steam game
 type GameInfo struct {
+	AppID           int    `json:"appid"`
 	Name            string `json:"name"`
 	PlaytimeForever int    `json:"playtimeforever"`
 	Playtime2Weeks  int    `json:"playtime2weeks"`
