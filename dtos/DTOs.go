@@ -12,6 +12,7 @@ type SaveUserDTO struct {
 	CurrentLevel        int                 `json:"currentlevel"`
 	MaxLevel            int                 `json:"maxlevel"`
 	User                common.UserDocument `json:"user"`
+	GamesOwnedFull      []common.GameInfo   `json:"gamesownedfull"`
 }
 
 // GetUserDTO is the returned data when user has been successfully
