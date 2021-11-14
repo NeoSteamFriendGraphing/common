@@ -9,6 +9,7 @@ type UserDocument struct {
 
 type AccDetailsDocument struct {
 	SteamID        string `json:"steamid"`
+	Personaname    string `json:"personaname"`
 	Profileurl     string `json:"profileurl"`
 	Avatar         string `json:"avatar"`
 	Timecreated    int    `json:"timecreated"`
