@@ -71,9 +71,9 @@ type Game struct {
 	PlaytimeForever          int    `json:"playtime_forever"`
 	ImgIconURL               string `json:"img_icon_url"`
 	ImgLogoURL               string `json:"img_logo_url"`
-	PlaytimeWindowsForever   int    `json:"playtime_windows_forever"`
-	PlaytimeMacForever       int    `json:"playtime_mac_forever"`
-	PlaytimeLinuxForever     int    `json:"playtime_linux_forever"`
+	PlaytimeWindowsForever   int    `json:"playtime_windows_forever,omitempty"`
+	PlaytimeMacForever       int    `json:"playtime_mac_forever,omitempty"`
+	PlaytimeLinuxForever     int    `json:"playtime_linux_forever,omitempty"`
 	HasCommunityVisibleStats bool   `json:"has_community_visible_stats,omitempty"`
 	Playtime2Weeks           int    `json:"playtime_2weeks,omitempty"`
 }

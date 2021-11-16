@@ -7,6 +7,8 @@ type UserDocument struct {
 	GamesOwned []GameOwnedDocument `json:"gamesowned"`
 }
 
+// AccDetailsDocument is the schema for information stored by
+// a user for a given user (in the user collection)
 type AccDetailsDocument struct {
 	SteamID        string `json:"steamid"`
 	Personaname    string `json:"personaname"`
@@ -16,19 +18,19 @@ type AccDetailsDocument struct {
 	Loccountrycode string `json:"loccountrycode"`
 }
 
+// GameOwnedDocument is the schema for information stored
+// by a user for a given game (in the user collection)
 type GameOwnedDocument struct {
 	AppID           int `json:"appid"`
 	PlaytimeForever int `json:"playtime_forever"`
 }
 
 // GameInfo is the schema for information stored for each steam game
-type GameInfo struct {
-	AppID           int    `json:"appid"`
-	Name            string `json:"name"`
-	PlaytimeForever int    `json:"playtimeforever"`
-	Playtime2Weeks  int    `json:"playtime2weeks"`
-	ImgIconURL      string `json:"imgiconurl"`
-	ImgLogoURL      string `json:"imglogourl"`
+type GameInfoDocument struct {
+	AppID      int    `json:"appid"`
+	Name       string `json:"name"`
+	ImgIconURL string `json:"imgiconurl"`
+	ImgLogoURL string `json:"imglogourl"`
 }
 
 // CrawlingStatus stores the total number of friends to crawl
