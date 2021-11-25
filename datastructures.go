@@ -1,5 +1,7 @@
 package common
 
+import "time"
+
 // UserDocument is the schema for information stored for a given user
 type UserDocument struct {
 	AccDetails AccDetailsDocument  `json:"accdetails"`
@@ -39,10 +41,12 @@ type GameInfoDocument struct {
 // user has been crawled completely and processing of their
 // data should start
 type CrawlingStatus struct {
-	OriginalCrawlTarget string `json:"originalcrawltarget"`
-	MaxLevel            int    `json:"maxlevel"`
-	TotalUsersToCrawl   int    `json:"totaluserstocrawl"`
-	UsersCrawled        int    `json:"userscrawled"`
+	TimeStarted         time.Time `json:"timestarted"`
+	CrawlID             string    `json:"crawlid"`
+	OriginalCrawlTarget string    `json:"originalcrawltarget"`
+	MaxLevel            int       `json:"maxlevel"`
+	TotalUsersToCrawl   int       `json:"totaluserstocrawl"`
+	UsersCrawled        int       `json:"userscrawled"`
 }
 
 // LoggingFields holds the default fields attached to logs
