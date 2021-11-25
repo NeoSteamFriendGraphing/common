@@ -22,3 +22,12 @@ type GetUserDTO struct {
 	Status string              `json:"status"`
 	User   common.UserDocument `json:"user"`
 }
+
+// SaveCrawlingStatsDTO is the input struct used when saving just
+// the crawling status. This is used when a user is already found
+// in the database an no steam API calls are needed before updating
+// the crawling status
+type SaveCrawlingStatsDTO struct {
+	CurrentLevel   int                   `json:"currentlevel"`
+	CrawlingStatus common.CrawlingStatus `json:"crawlingstatus"`
+}
