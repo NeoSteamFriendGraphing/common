@@ -9,6 +9,7 @@ import (
 // current user to be saved
 type SaveUserDTO struct {
 	OriginalCrawlTarget string                    `json:"orginalcrawltarget"`
+	CrawlID             string                    `json:"crawlid"`
 	CurrentLevel        int                       `json:"currentlevel"`
 	MaxLevel            int                       `json:"maxlevel"`
 	User                common.UserDocument       `json:"user"`
