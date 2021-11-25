@@ -21,8 +21,8 @@ type AccDetailsDocument struct {
 // GameOwnedDocument is the schema for information stored
 // by a user for a given game (in the user collection)
 type GameOwnedDocument struct {
-	AppID           int `json:"appid"`
-	PlaytimeForever int `json:"playtime_forever"`
+	AppID            int `json:"appid"`
+	Playtime_Forever int `json:"playtime_forever"`
 }
 
 // GameInfo is the schema for information stored for each steam game
