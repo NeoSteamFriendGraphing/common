@@ -31,3 +31,9 @@ type SaveCrawlingStatsDTO struct {
 	CurrentLevel   int                   `json:"currentlevel"`
 	CrawlingStatus common.CrawlingStatus `json:"crawlingstatus"`
 }
+
+// GetCrawlingStatusDTO is returned from GET /getcrawlingstatus
+type GetCrawlingStatusDTO struct {
+	Status         string                `json:"status"`
+	CrawlingStatus common.CrawlingStatus `json:"crawlingstatus"`
+}
