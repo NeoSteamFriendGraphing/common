@@ -37,3 +37,10 @@ type GetCrawlingStatusDTO struct {
 	Status         string                `json:"status"`
 	CrawlingStatus common.CrawlingStatus `json:"crawlingstatus"`
 }
+
+// GetGraphableDataForUserDTO is returned from GET /getgraphabledata
+type GetGraphableDataForUserDTO struct {
+	Username  string   `json:"username"`
+	SteamID   string   `json:"steamid"`
+	FriendIDs []string `json:"friendids"`
+}
