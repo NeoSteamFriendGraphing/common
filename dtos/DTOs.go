@@ -44,3 +44,20 @@ type GetGraphableDataForUserDTO struct {
 	SteamID   string   `json:"steamid"`
 	FriendIDs []string `json:"friendids"`
 }
+
+// GetUsernamesFromSteamIDsInputDTO is the input body accepted to
+// POST /getusernamesfromsteamids
+type GetUsernamesFromSteamIDsInputDTO struct {
+	SteamIDs []string `json:"steamids"`
+}
+
+// GetUsernamesFromSteamIDsDTO is returned from calls to
+// POST /getusernamesfromsteamids
+type GetUsernamesFromSteamIDsDTO struct {
+	SteamIDAndUsername []SteamIDAndUsername `json:"steamidsandusername"`
+}
+
+type SteamIDAndUsername struct {
+	SteamID  string `json:"steamid"`
+	Username string `json:"username"`
+}
