@@ -69,7 +69,9 @@ func TestEnsureAllEnvvarsAreSet(t *testing.T) {
 	os.Setenv("LOG_PATH", "techno")
 	os.Setenv("NODE_NAME", "techno")
 	os.Setenv("SYSTEM_STATS_BUCKET", "techno")
-	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "techno")
+	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "groove")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET", "industrial")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "dnb")
 	os.Setenv("ORG", "techno")
 	os.Setenv("INFLUXDB_URL", "techno")
 
@@ -80,6 +82,8 @@ func TestEnsureAllEnvvarsAreSet(t *testing.T) {
 	os.Setenv("NODE_NAME", "")
 	os.Setenv("SYSTEM_STATS_BUCKET", "")
 	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET", "")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "")
 	os.Setenv("ORG", "")
 	os.Setenv("INFLUXDB_URL", "")
 }
@@ -91,6 +95,8 @@ func TestEnsureAllEnvvarsCatchesAnUnsetDefaultVariable(t *testing.T) {
 	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "techno")
 	os.Setenv("ORG", "techno")
 	os.Setenv("INFLUXDB_URL", "techno")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET", "industrial")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "dnb")
 
 	expectedErrorMsg := "One or more env vars were not set: SYSTEM_STATS_BUCKET\n"
 	assert.EqualError(t, EnsureAllEnvVarsAreSet(), expectedErrorMsg)
@@ -100,6 +106,8 @@ func TestEnsureAllEnvvarsCatchesAnUnsetDefaultVariable(t *testing.T) {
 	os.Setenv("NODE_NAME", "")
 	os.Setenv("SYSTEM_STATS_BUCKET", "")
 	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET", "")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "")
 	os.Setenv("ORG", "")
 	os.Setenv("INFLUXDB_URL", "")
 }
@@ -110,9 +118,21 @@ func TestEnsureAllEnvvarsCatchesAnUnsetServiceSpecificVariable(t *testing.T) {
 	os.Setenv("NODE_NAME", "techno")
 	os.Setenv("SYSTEM_STATS_BUCKET", "techno")
 	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "techno")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET", "industrial")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "dnb")
 	os.Setenv("ORG", "techno")
 	os.Setenv("INFLUXDB_URL", "techno")
 
 	expectedErrorMsg := "One or more env vars were not set: ANYCANS\n"
 	assert.EqualError(t, EnsureAllEnvVarsAreSet("ANYCANS"), expectedErrorMsg)
+
+	os.Setenv("API_PORT", "")
+	os.Setenv("LOG_PATH", "")
+	os.Setenv("NODE_NAME", "")
+	os.Setenv("SYSTEM_STATS_BUCKET", "")
+	os.Setenv("SYSTEM_STATS_BUCKET_TOKEN", "")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET", "")
+	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "")
+	os.Setenv("ORG", "")
+	os.Setenv("INFLUXDB_URL", "")
 }

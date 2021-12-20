@@ -143,7 +143,6 @@ func GetAndRead(URL string) ([]byte, error) {
 
 func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
 	resultString := ""
-	// Datastore specific
 	if os.Getenv("API_PORT") == "" {
 		resultString += "API_PORT\n"
 	}
@@ -153,11 +152,18 @@ func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
 	if os.Getenv("NODE_NAME") == "" {
 		resultString += "NODE_NAME\n"
 	}
+
 	if os.Getenv("SYSTEM_STATS_BUCKET") == "" {
 		resultString += "SYSTEM_STATS_BUCKET\n"
 	}
 	if os.Getenv("SYSTEM_STATS_BUCKET_TOKEN") == "" {
 		resultString += "SYSTEM_STATS_BUCKET_TOKEN\n"
+	}
+	if os.Getenv("ENDPOINT_LATENCIES_BUCKET") == "" {
+		resultString += "ENDPOINT_LATENCIES_BUCKET\n"
+	}
+	if os.Getenv("ENDPOINT_LATENCIES_BUCKET_TOKEN") == "" {
+		resultString += "ENDPOINT_LATENCIES_BUCKET_TOKEN\n"
 	}
 	if os.Getenv("ORG") == "" {
 		resultString += "ORG\n"
