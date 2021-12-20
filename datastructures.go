@@ -55,4 +55,5 @@ type LoggingFields struct {
 	NodeDC   string
 	LogPaths []string
 	NodeIPV4 string
+	Service  string
 }
