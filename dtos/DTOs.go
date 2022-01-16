@@ -102,3 +102,10 @@ type DoesProcessedGraphDataExistDTO struct {
 	Status string `json:"status"`
 	Exists string `json:"exists"`
 }
+
+// GetProcessedGraphDataDTO is the format of returned data from
+// POST /getprocessedgraphdata
+type GetProcessedGraphDataDTO struct {
+	Status        string                `json:"status"`
+	UserGraphData common.UsersGraphData `json:"usergraphdata"`
+}
