@@ -61,3 +61,44 @@ type SteamIDAndUsername struct {
 	SteamID  string `json:"steamid"`
 	Username string `json:"username"`
 }
+
+// CrawlUsersInputDTO is the input format when accessing
+// POST /crawl
+type CrawlUsersInputDTO struct {
+	FirstSteamID  string `json:"firstSteamID"`
+	SecondSteamID string `json:"secondSteamID"`
+	Level         int    `json:"level"`
+}
+
+// CrawlUsersInputDTO is the input format when accessing
+// POST /creategraph
+type CreateGraphInputDTO struct {
+	CrawlID string `json:"crawlid"`
+}
+
+// GetDetailsForGamesInputDTO is the input format when accessing
+// POST /getdetailsforgames
+type GetDetailsForGamesInputDTO struct {
+	GameIDs []int `json:"gameids"`
+}
+
+// GetDetailsForGamesDTO is the format of returned data from
+// POST /getdetailsforgames
+type GetDetailsForGamesDTO struct {
+	Status string                `json:"status"`
+	Games  []common.BareGameInfo `json:"games"`
+}
+
+// HasBeenCrawledBeforeInputDTO is the input format when accessing
+// POST /hasbeencrawledbefore
+type HasBeenCrawledBeforeInputDTO struct {
+	Level   int    `json:"level"`
+	SteamID string `json:"steamid"`
+}
+
+// DoesProcessedGraphDataExistDTO is the input format when accessing
+// POST /doesprocessedgraphdataexist
+type DoesProcessedGraphDataExistDTO struct {
+	Status string `json:"status"`
+	Exists string `json:"exists"`
+}

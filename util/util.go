@@ -46,6 +46,7 @@ func LoadLoggingConfig() (common.LoggingFields, error) {
 		NodeDC:   os.Getenv("NODE_DC"),
 		LogPaths: []string{"stdout", os.Getenv("LOG_PATH")},
 		NodeIPV4: GetLocalIPAddress(),
+		Service:  os.Getenv("SERVICE"),
 	}
 	if logFieldsConfig.NodeName == "" || logFieldsConfig.NodeDC == "" ||
 		logFieldsConfig.LogPaths[1] == "" || logFieldsConfig.NodeIPV4 == "" {
@@ -66,6 +67,7 @@ func InitLogger(logFieldsConfig common.LoggingFields) *zap.Logger {
 	globalLogFields["nodeName"] = logFieldsConfig.NodeName
 	globalLogFields["nodeDC"] = logFieldsConfig.NodeDC
 	globalLogFields["nodeIPV4"] = logFieldsConfig.NodeIPV4
+	globalLogFields["service"] = logFieldsConfig.Service
 	c.InitialFields = globalLogFields
 
 	log, err := c.Build()
@@ -88,16 +90,6 @@ func GetRequestStartTimeInTimeFormat(requestStartTimeString string) int64 {
 		panic(err)
 	}
 	return requestStartTime
-}
-
-// IsValidFormatGraphID determines whether not a string is a valid format
-// graphID that the system will serve
-func IsValidFormatGraphID(inputGraphID string) (bool, error) {
-	isNotValid, err := regexp.MatchString("[\\W]", inputGraphID)
-	if err != nil || isNotValid {
-		return false, err
-	}
-	return true, nil
 }
 
 // SendBasicInvalidResponse sends an invalid response back to the user with specified
@@ -143,6 +135,7 @@ func GetAndRead(URL string) ([]byte, error) {
 
 func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
 	resultString := ""
+
 	if os.Getenv("API_PORT") == "" {
 		resultString += "API_PORT\n"
 	}
@@ -152,7 +145,9 @@ func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
 	if os.Getenv("NODE_NAME") == "" {
 		resultString += "NODE_NAME\n"
 	}
-
+	if os.Getenv("SERVICE") == "" {
+		resultString += "SERVICE\n"
+	}
 	if os.Getenv("SYSTEM_STATS_BUCKET") == "" {
 		resultString += "SYSTEM_STATS_BUCKET\n"
 	}
@@ -180,7 +175,7 @@ func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
 	}
 
 	if resultString != "" {
-		return fmt.Errorf("One or more env vars were not set: %s", resultString)
+		return fmt.Errorf("one or more env vars were not set: %s", resultString)
 	}
 	return nil
 }

@@ -1,7 +1,5 @@
 package common
 
-import "time"
-
 // UserDocument is the schema for information stored for a given user
 type UserDocument struct {
 	AccDetails AccDetailsDocument  `json:"accdetails"`
@@ -41,15 +39,41 @@ type GameInfoDocument struct {
 // user has been crawled completely and processing of their
 // data should start
 type CrawlingStatus struct {
-	TimeStarted         time.Time `json:"timestarted"`
-	CrawlID             string    `json:"crawlid"`
-	OriginalCrawlTarget string    `json:"originalcrawltarget"`
-	MaxLevel            int       `json:"maxlevel"`
-	TotalUsersToCrawl   int       `json:"totaluserstocrawl"`
-	UsersCrawled        int       `json:"userscrawled"`
+	TimeStarted         int64  `json:"timestarted"`
+	Status              string `json:"status"`
+	CrawlID             string `json:"crawlid"`
+	OriginalCrawlTarget string `json:"originalcrawltarget"`
+	MaxLevel            int    `json:"maxlevel"`
+	TotalUsersToCrawl   int    `json:"totaluserstocrawl"`
+	UsersCrawled        int    `json:"userscrawled"`
 }
 
-// LoggingFields holds the default fields attached to logs
+// UsersGraphData is the data saved for an entire crawl job that
+// is later served and processed for viewing. All of a user's details
+// and their friend network's details along with the ten most popular
+// games of the network are saved here
+type UsersGraphData struct {
+	UserDetails       UsersGraphInformation   `json:"userdetails"`
+	FriendDetails     []UsersGraphInformation `json:"frienddetails"`
+	TopTenGameDetails []BareGameInfo          `json:"toptengamedetails"`
+}
+
+// UsersGraphInformation stores information for each user in relation
+// to which user they are connected with initially in the network
+type UsersGraphInformation struct {
+	User         UserDocument
+	FromID       string
+	MaxLevel     int
+	CurrentLevel int
+}
+
+// BareGameInfo correlates a steam appID to a game title
+type BareGameInfo struct {
+	AppID int    `json:"appid"`
+	Name  string `json:"name"`
+}
+
+// LoggingFields holds the default fields that are attached to logs
 type LoggingFields struct {
 	NodeName string
 	NodeDC   string
