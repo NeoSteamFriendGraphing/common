@@ -40,7 +40,6 @@ type GameInfoDocument struct {
 // data should start
 type CrawlingStatus struct {
 	TimeStarted         int64  `json:"timestarted"`
-	Status              string `json:"status"`
 	CrawlID             string `json:"crawlid"`
 	OriginalCrawlTarget string `json:"originalcrawltarget"`
 	MaxLevel            int    `json:"maxlevel"`
