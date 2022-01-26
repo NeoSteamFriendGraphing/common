@@ -52,9 +52,14 @@ type CrawlingStatus struct {
 // and their friend network's details along with the ten most popular
 // games of the network are saved here
 type UsersGraphData struct {
-	UserDetails       UsersGraphInformation   `json:"userdetails"`
-	FriendDetails     []UsersGraphInformation `json:"frienddetails"`
-	TopTenGameDetails []BareGameInfo          `json:"toptengamedetails"`
+	UserDetails   UsersGraphInformation   `json:"userdetails"`
+	FriendDetails []UsersGraphInformation `json:"frienddetails"`
+	// TopGameDetails is the details of the most played games
+	// for a given user. Ten are initially chosen but only the games
+	// with supplied details from the steam web API are included
+	// in the final output which can lead to there being less than
+	// ten games. At most only ten games will be present
+	TopGameDetails []BareGameInfo `json:"topgamedetails"`
 }
 
 // UsersGraphInformation stores information for each user in relation
