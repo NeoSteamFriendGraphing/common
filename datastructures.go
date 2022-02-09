@@ -2,9 +2,10 @@ package common
 
 // UserDocument is the schema for information stored for a given user
 type UserDocument struct {
-	AccDetails AccDetailsDocument  `json:"accdetails"`
-	FriendIDs  []string            `json:"friendids"`
-	GamesOwned []GameOwnedDocument `json:"gamesowned"`
+	AccDetails    AccDetailsDocument  `json:"accdetails"`
+	FriendIDs     []string            `json:"friendids"`
+	GamesOwned    []GameOwnedDocument `json:"gamesowned"`
+	InsertionTime int64               `json:"insertiontime"`
 }
 
 // AccDetailsDocument is the schema for information stored by
