@@ -1,6 +1,7 @@
 package util
 
 import (
+	"errors"
 	"os"
 	"testing"
 
@@ -55,17 +56,6 @@ func TestLoadLoggingConfigWithoutAllVariablesSetReturnsAnError(t *testing.T) {
 
 	assert.Contains(t, err.Error(), "one or more required environment variables are not set:")
 }
-
-// func TestIsValidFormatGraphID(t *testing.T) {
-// 	isValid, err := IsValidFormatGraphID("helloWorld1234234")
-// 	assert.True(t, isValid)
-// 	assert.Nil(t, err)
-// }
-// func TestIsValidFormatGraphIDWithPathTraversalInput(t *testing.T) {
-// 	isValid, err := IsValidFormatGraphID("../../../../.env")
-// 	assert.False(t, isValid)
-// 	assert.Nil(t, err)
-// }
 
 func TestEnsureAllEnvvarsAreSet(t *testing.T) {
 	os.Setenv("API_PORT", "techno")
@@ -144,4 +134,12 @@ func TestEnsureAllEnvvarsCatchesAnUnsetServiceSpecificVariable(t *testing.T) {
 	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "")
 	os.Setenv("ORG", "")
 	os.Setenv("INFLUXDB_URL", "")
+}
+
+func TestMakeErr(t *testing.T) {
+	expectedSubstring := "detailed explanation: could not do it"
+	randomErr := errors.New("could not do it")
+	actualErr := MakeErr(randomErr, "detailed explanation")
+
+	assert.Contains(t, actualErr.Error(), expectedSubstring)
 }

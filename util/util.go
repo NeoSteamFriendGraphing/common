@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -184,4 +185,13 @@ func SetupCORS(w *http.ResponseWriter, req *http.Request) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
+
+// MakeErr creates an error with a trace to where this function was
+// called from
+// 		errorWithLineTrace := MakeErr(err, "heres an error that was thrown because of x, y, z...")
+func MakeErr(err error, msg ...string) error {
+	_, file, line, _ := runtime.Caller(1)
+	path, _ := os.Getwd()
+	return fmt.Errorf("%s:%d %s: %s", strings.TrimPrefix(file, path), line, msg[0], err)
 }
