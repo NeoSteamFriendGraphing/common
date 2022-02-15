@@ -191,6 +191,9 @@ func SetupCORS(w *http.ResponseWriter, req *http.Request) {
 // called from
 // 		errorWithLineTrace := MakeErr(err, "heres an error that was thrown because of x, y, z...")
 func MakeErr(err error, msg ...string) error {
+	if err == nil {
+		return nil
+	}
 	_, file, line, _ := runtime.Caller(1)
 	path, _ := os.Getwd()
 	return fmt.Errorf("%s:%d %s: %s", strings.TrimPrefix(file, path), line, msg[0], err)
