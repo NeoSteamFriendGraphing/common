@@ -202,3 +202,16 @@ func MakeErr(err error, msg ...string) error {
 	path, _ := os.Getwd()
 	return fmt.Errorf("%s:%d %s: %s", strings.TrimPrefix(file, path), line, msg[0], err)
 }
+
+func GetBaseURLPath(r *http.Request) string {
+	urlPathBasic := ""
+	urlPath := strings.Split(r.URL.EscapedPath(), "/")
+	if len(urlPath) > 1 {
+		if urlPath[1] == "api" || urlPath[1] == "ws" {
+			urlPathBasic = urlPath[2]
+		}
+	} else {
+		urlPathBasic = "/"
+	}
+	return urlPathBasic
+}
