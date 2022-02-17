@@ -95,7 +95,7 @@ func TestEnsureAllEnvvarsCatchesAnUnsetDefaultVariable(t *testing.T) {
 	os.Setenv("ENDPOINT_LATENCIES_BUCKET_TOKEN", "dnb")
 
 	expectedErrorMsg := "one or more env vars were not set: SYSTEM_STATS_BUCKET\n"
-	assert.EqualError(t, EnsureAllEnvVarsAreSet(), expectedErrorMsg)
+	assert.Contains(t, EnsureAllEnvVarsAreSet().Error(), expectedErrorMsg)
 
 	os.Setenv("API_PORT", "")
 	os.Setenv("LOG_PATH", "")
@@ -122,7 +122,7 @@ func TestEnsureAllEnvvarsCatchesAnUnsetServiceSpecificVariable(t *testing.T) {
 	os.Setenv("INFLUXDB_URL", "techno")
 
 	expectedErrorMsg := "one or more env vars were not set: ANYCANS\n"
-	assert.EqualError(t, EnsureAllEnvVarsAreSet("ANYCANS"), expectedErrorMsg)
+	assert.Contains(t, EnsureAllEnvVarsAreSet("ANYCANS").Error(), expectedErrorMsg)
 
 	os.Setenv("API_PORT", "")
 	os.Setenv("LOG_PATH", "")

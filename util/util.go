@@ -2,6 +2,7 @@ package util
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -122,13 +123,13 @@ func SendBasicErrorResponse(w http.ResponseWriter, req *http.Request, err error,
 func GetAndRead(URL string) ([]byte, error) {
 	res, err := http.Get(URL)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, MakeErr(err)
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
 	defer res.Body.Close()
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, MakeErr(err)
 	}
 
 	return body, nil
@@ -176,7 +177,7 @@ func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
 	}
 
 	if resultString != "" {
-		return fmt.Errorf("one or more env vars were not set: %s", resultString)
+		return MakeErr(errors.New("all env vars were not set"), fmt.Sprintf("one or more env vars were not set: %s", resultString))
 	}
 	return nil
 }
