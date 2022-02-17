@@ -120,8 +120,18 @@ func SendBasicErrorResponse(w http.ResponseWriter, req *http.Request, err error,
 
 // GetAndRead executes a HTTP GET request and returns the body
 // of the response in []byte format or an error if it's not nil
-func GetAndRead(URL string) ([]byte, error) {
-	res, err := http.Get(URL)
+func GetAndRead(URL string, headers []http.Header) ([]byte, error) {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		return []byte{}, MakeErr(err)
+	}
+	for _, header := range headers {
+		for key, val := range header {
+			req.Header.Set(key, val[0])
+		}
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		return []byte{}, MakeErr(err)
 	}
