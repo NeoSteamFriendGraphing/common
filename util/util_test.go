@@ -58,6 +58,7 @@ func TestLoadLoggingConfigWithoutAllVariablesSetReturnsAnError(t *testing.T) {
 }
 
 func TestEnsureAllEnvvarsAreSet(t *testing.T) {
+	os.Setenv("AUTH_KEY", "dnb")
 	os.Setenv("API_PORT", "techno")
 	os.Setenv("LOG_PATH", "techno")
 	os.Setenv("NODE_NAME", "techno")
@@ -71,6 +72,7 @@ func TestEnsureAllEnvvarsAreSet(t *testing.T) {
 
 	assert.NoError(t, EnsureAllEnvVarsAreSet())
 
+	os.Setenv("AUTH_KEY", "")
 	os.Setenv("API_PORT", "")
 	os.Setenv("LOG_PATH", "")
 	os.Setenv("NODE_NAME", "")
@@ -84,6 +86,7 @@ func TestEnsureAllEnvvarsAreSet(t *testing.T) {
 }
 
 func TestEnsureAllEnvvarsCatchesAnUnsetDefaultVariable(t *testing.T) {
+	os.Setenv("AUTH_KEY", "dnb")
 	os.Setenv("API_PORT", "techno")
 	os.Setenv("LOG_PATH", "techno")
 	os.Setenv("NODE_NAME", "techno")
@@ -97,6 +100,7 @@ func TestEnsureAllEnvvarsCatchesAnUnsetDefaultVariable(t *testing.T) {
 	expectedErrorMsg := "one or more env vars were not set: SYSTEM_STATS_BUCKET\n"
 	assert.Contains(t, EnsureAllEnvVarsAreSet().Error(), expectedErrorMsg)
 
+	os.Setenv("AUTH_KEY", "")
 	os.Setenv("API_PORT", "")
 	os.Setenv("LOG_PATH", "")
 	os.Setenv("NODE_NAME", "")
@@ -110,6 +114,7 @@ func TestEnsureAllEnvvarsCatchesAnUnsetDefaultVariable(t *testing.T) {
 }
 
 func TestEnsureAllEnvvarsCatchesAnUnsetServiceSpecificVariable(t *testing.T) {
+	os.Setenv("AUTH_KEY", "dnb")
 	os.Setenv("API_PORT", "techno")
 	os.Setenv("LOG_PATH", "techno")
 	os.Setenv("NODE_NAME", "techno")
@@ -124,6 +129,7 @@ func TestEnsureAllEnvvarsCatchesAnUnsetServiceSpecificVariable(t *testing.T) {
 	expectedErrorMsg := "one or more env vars were not set: ANYCANS\n"
 	assert.Contains(t, EnsureAllEnvVarsAreSet("ANYCANS").Error(), expectedErrorMsg)
 
+	os.Setenv("AUTH_KEY", "")
 	os.Setenv("API_PORT", "")
 	os.Setenv("LOG_PATH", "")
 	os.Setenv("NODE_NAME", "")

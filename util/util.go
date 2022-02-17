@@ -138,6 +138,9 @@ func GetAndRead(URL string) ([]byte, error) {
 func EnsureAllEnvVarsAreSet(serviceSpecificEnvVars ...string) error {
 	resultString := ""
 
+	if os.Getenv("AUTH_KEY") == "" {
+		resultString += "AUTH_KEY\n"
+	}
 	if os.Getenv("API_PORT") == "" {
 		resultString += "API_PORT\n"
 	}
