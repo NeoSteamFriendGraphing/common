@@ -220,6 +220,8 @@ func GetBaseURLPath(r *http.Request) string {
 		if urlPath[1] == "api" || urlPath[1] == "ws" {
 			urlPathBasic = urlPath[2]
 		}
+	} else if len(urlPath) == 1 {
+		urlPathBasic = urlPath[1]
 	} else {
 		urlPathBasic = "/"
 	}
