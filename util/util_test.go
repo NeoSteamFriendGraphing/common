@@ -2,6 +2,8 @@ package util
 
 import (
 	"errors"
+	"net/http"
+	"net/url"
 	"os"
 	"testing"
 
@@ -148,4 +150,64 @@ func TestMakeErr(t *testing.T) {
 	actualErr := MakeErr(randomErr, "detailed explanation")
 
 	assert.Contains(t, actualErr.Error(), expectedSubstring)
+}
+
+func TestGetBaseURLPath(t *testing.T) {
+	expectedPath := "status"
+
+	fakeReq := http.Request{
+		URL: &url.URL{
+			Path:    "/status",
+			RawPath: "/status",
+		},
+	}
+
+	realPath := GetBaseURLPath(&fakeReq)
+
+	assert.Equal(t, expectedPath, realPath)
+}
+
+func TestGetBaseURLPathWtihStaticContent(t *testing.T) {
+	expectedPath := "static/javascript/anne.jpg"
+
+	fakeReq := http.Request{
+		URL: &url.URL{
+			Path:    "/static/javascript/anne.jpg",
+			RawPath: "/static/javascript/anne.jpg",
+		},
+	}
+
+	realPath := GetBaseURLPath(&fakeReq)
+
+	assert.Equal(t, expectedPath, realPath)
+}
+
+func TestGetBaseURLPathWtihIndex(t *testing.T) {
+	expectedPath := "/"
+
+	fakeReq := http.Request{
+		URL: &url.URL{
+			Path:    "/",
+			RawPath: "/",
+		},
+	}
+
+	realPath := GetBaseURLPath(&fakeReq)
+
+	assert.Equal(t, expectedPath, realPath)
+}
+
+func TestGetBaseURLPathWithAPIOrWsPrefix(t *testing.T) {
+	expectedPath := "ws/newuserstream"
+
+	fakeReq := http.Request{
+		URL: &url.URL{
+			Path:    "/ws/newuserstream",
+			RawPath: "/ws/newuserstream",
+		},
+	}
+
+	realPath := GetBaseURLPath(&fakeReq)
+
+	assert.Equal(t, expectedPath, realPath)
 }

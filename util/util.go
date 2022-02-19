@@ -214,16 +214,13 @@ func MakeErr(err error, msg ...string) error {
 }
 
 func GetBaseURLPath(r *http.Request) string {
-	urlPathBasic := ""
 	urlPath := strings.Split(r.URL.EscapedPath(), "/")
-	if len(urlPath) > 1 {
-		if urlPath[1] == "api" || urlPath[1] == "ws" {
-			urlPathBasic = urlPath[2]
-		}
-	} else if len(urlPath) == 1 {
-		urlPathBasic = urlPath[1]
-	} else {
-		urlPathBasic = "/"
+
+	if len(urlPath) > 2 {
+		return strings.Join(urlPath[1:], "/")
 	}
-	return urlPathBasic
+	if len(urlPath) == 2 && urlPath[1] != "" {
+		return urlPath[1]
+	}
+	return "/"
 }
