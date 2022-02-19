@@ -211,3 +211,18 @@ func TestGetBaseURLPathWithAPIOrWsPrefix(t *testing.T) {
 
 	assert.Equal(t, expectedPath, realPath)
 }
+
+func TestGetBaseURLPathWithURLValue(t *testing.T) {
+	expectedPath := "getgamedetails"
+
+	fakeReq := http.Request{
+		URL: &url.URL{
+			Path:    "/getgamedetails/50",
+			RawPath: "/getgamedetails/50",
+		},
+	}
+
+	realPath := GetBaseURLPath(&fakeReq)
+
+	assert.Equal(t, expectedPath, realPath)
+}
