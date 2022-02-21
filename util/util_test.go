@@ -198,12 +198,12 @@ func TestGetBaseURLPathWtihIndex(t *testing.T) {
 }
 
 func TestGetBaseURLPathWithAPIOrWsPrefix(t *testing.T) {
-	expectedPath := "ws/newuserstream"
+	expectedPath := "newuserstream"
 
 	fakeReq := http.Request{
 		URL: &url.URL{
-			Path:    "/ws/newuserstream",
-			RawPath: "/ws/newuserstream",
+			Path:    "/ws/newuserstream/234234",
+			RawPath: "/ws/newuserstream/234234",
 		},
 	}
 
@@ -219,6 +219,21 @@ func TestGetBaseURLPathWithURLValue(t *testing.T) {
 		URL: &url.URL{
 			Path:    "/getgamedetails/50",
 			RawPath: "/getgamedetails/50",
+		},
+	}
+
+	realPath := GetBaseURLPath(&fakeReq)
+
+	assert.Equal(t, expectedPath, realPath)
+}
+
+func TestGetBaseURLPathWithApiPrefix(t *testing.T) {
+	expectedPath := "getuser"
+
+	fakeReq := http.Request{
+		URL: &url.URL{
+			Path:    "/api/getuser/12321432",
+			RawPath: "/api/getuser/12321432",
 		},
 	}
 

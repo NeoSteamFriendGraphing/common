@@ -217,7 +217,13 @@ func GetBaseURLPath(r *http.Request) string {
 	urlPath := strings.Split(r.URL.EscapedPath(), "/")
 
 	if len(urlPath) > 2 {
-		if urlPath[1] == "ws" || urlPath[1] == "api" || urlPath[1] == "static" {
+		if urlPath[1] == "ws" || urlPath[1] == "api" {
+			if len(urlPath) == 4 {
+				return strings.Join(urlPath[2:len(urlPath)-1], "/")
+			}
+			return strings.Join(urlPath[1:], "/")
+		}
+		if urlPath[1] == "static" {
 			return strings.Join(urlPath[1:], "/")
 		}
 
