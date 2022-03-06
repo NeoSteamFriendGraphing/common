@@ -210,7 +210,10 @@ func MakeErr(err error, msg ...string) error {
 	}
 	_, file, line, _ := runtime.Caller(1)
 	path, _ := os.Getwd()
-	return fmt.Errorf("%s:%d %s: %s", strings.TrimPrefix(file, path), line, msg[0], err)
+	if len(msg) > 0 {
+		return fmt.Errorf("%s:%d %s: %s", strings.TrimPrefix(file, path), line, msg[0], err)
+	}
+	return fmt.Errorf("%s:%d : %s", strings.TrimPrefix(file, path), line, err)
 }
 
 func GetBaseURLPath(r *http.Request) string {
